@@ -32,12 +32,14 @@ app.use(
 const db = require("./app/models");
 const Role = db.role;
 
-db.sequelize.sync();
-// force: true will drop the table if it already exists
-// db.sequelize.sync({force: true}).then(() => {
-//   console.log('Drop and Resync Database with { force: true }');
-//   initial();
-// });
+// Synchronize with the database
+db.sequelize.sync()
+  .then(() => {
+    console.log("Synced db."); // Log successful synchronization
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message); // Log synchronization failure with the error message
+  });
 
 // simple route
 app.get("/", (req, res) => {
